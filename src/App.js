@@ -162,7 +162,7 @@ class App extends React.Component {
   }
 
   postPet = (pet) => { 
-    console.log(this.localUser())
+    // console.log(this.localUser())
      fetch(petsURL, {
       method: "POST",
       headers: {
