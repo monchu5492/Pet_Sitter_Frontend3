@@ -41,7 +41,7 @@ class App extends React.Component {
 
     setLocalStorage = (user) => {
       localStorage.setItem('user', JSON.stringify(user))
-      // let localUserId = localStorage.getItem('user').id
+      let localUserId = localStorage.getItem('user').id
     }
 
     localUser = () => {
@@ -51,11 +51,18 @@ class App extends React.Component {
  
   componentDidMount() {
     this.getAllOwners()
+
+    if (localStorage.getItem('user')) {
     this.getFreshPets()
+    }
 
     fetch(petsURL)
     .then(res => res.json())
-    .then(pets => this.setState({...this.state, pets: pets}))
+    .then(pets => {
+      // console.log(pets);
+      // debugger;
+      this.setState({...this.state, pets: pets})
+    })
   }
 
   getAllOwners = () => {
@@ -110,6 +117,7 @@ class App extends React.Component {
       newSignup: false})
       console.log(ownersfiltered)
       this.setLocalStorage(ownersfiltered[0])
+      this.getFreshPets()
     }
     
 
@@ -153,7 +161,38 @@ class App extends React.Component {
       // this.setState({...this.state, currentUserPets: this.state.currentUserPets.push(pet)}))
   }
 
+  
+  deletePet = (pet) => {
+    const petsToKeep = this.state.currentUserPets.filter( i => i.id != pet.id)
+    console.log("CONSOLE LOGGING DELETE FUNCTION:", petsToKeep)
+    
+    this.setState({
+      currentUserPets: petsToKeep 
+    }, () => this.deletePetPost(pet))
+    
+    console.log(pet)
+  }
+  
+  deletePetPost = (pet) => {
+    console.log(pet)
+    fetch(`http://localhost:3000/pets/${pet.id}`, {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(res => res.json())
+      .then(() => console.log("deleted pet"))
+  }
 
+  // method: "DELETE",
+  // headers: {
+  //   "Content-Type": "application/json",
+  //   "Accept": "application/json"
+  // },
+  // body: JSON.stringify({
+  //   currentUserPets: {...currentUserPets, id: this.props.pet.id}
+  // // })
   // this.state.currentUserPets[0]
   // renderOwnersProfile = (firstName) => {
   //   console.log(firstName)
@@ -178,10 +217,11 @@ class App extends React.Component {
 
 
   render() {
-    console.log(this.state.pets)
+    // console.log(this.state.pets)
+    // debugger;
     return (
       <div>
-        {console.log(this.localUser().pets)}
+        {/* {console.log(this.localUser().pets)} */}
         <Router>
           <NavBar />
 
@@ -207,7 +247,7 @@ class App extends React.Component {
         <Route
           path="/profile"
           exact
-          render={() => <MyProfile  currentUserPets={this.state.currentUserPets} updatePets={this.updatePets} user={this.localUser()} postPet={this.postPet} freshPetsFunction={this.getFreshPets}/>}
+          render={() => <MyProfile  currentUserPets={this.state.currentUserPets} updatePets={this.updatePets} user={this.localUser()} postPet={this.postPet} freshPetsFunction={this.getFreshPets} deletePet={this.deletePet}/>}
         />
 
         {/* <Route 
