@@ -16,6 +16,7 @@ const PetCard = (props) => (
           </Card.Description>
         </Card.Content>
         <button className="ui button">Edit Pet</button>
+        <button className="ui button">Delete Pet</button>
       </Card>
 )
 
