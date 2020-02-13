@@ -22,7 +22,7 @@ class App extends React.Component {
       owners: [],
       isLoggedIn: false,
       newSignup: false,
-      user: [{}],
+      user: [{l:0}],
       pets: [{}],
       currentUserPets: []
       
@@ -39,21 +39,36 @@ class App extends React.Component {
 
     
 
-    setLocalStorage = (user) => {
-      localStorage.setItem('user', JSON.stringify(user))
-      let localUserId = localStorage.getItem('user').id
-    }
+    // setLocalStorage = (user) => {
+    //   localStorage.setItem('user', JSON.stringify(user))
+    //   let localUserId = localStorage.getItem('user').idcd
+    // }
 
-    localUser = () => {
-      let user = JSON.parse(localStorage.getItem('user'))
-      return user
-    }
+    // localUser = () => {
+    //   let user = JSON.parse(localStorage.getItem('user'))
+    //   return user
+    // }
  
   componentDidMount() {
     this.getAllOwners()
-
-    if (localStorage.getItem('user')) {
+    // localStorage.getItem('user')
+    if (this.state.user) {
     this.getFreshPets()
+    } else {
+      return(
+    <div>
+      <Router>
+        <Route
+            path="/login"
+            exact
+            render={() => 
+            <LoginSignupContainer 
+            onLogInUser={this.onLogInUser } 
+            loggedInState={this.state.isLoggedIn}/>}
+          />
+      </Router>
+    </div>
+      )
     }
 
     fetch(petsURL)
@@ -80,7 +95,7 @@ class App extends React.Component {
 
   filterFreshPets = (pets) => {
     let filteredPets = pets.filter(pet => {
-      return pet.owner.id == this.localUser().id
+      return pet.owner.id == this.state.user.id
     })
     console.log("LOGGING FILTERED PETS:", filteredPets)
       // console.log(pet.owner.id)
@@ -113,10 +128,11 @@ class App extends React.Component {
     let ownersfiltered = this.state.owners.filter(owner => owner.name == username)
     this.setState({isLoggedIn: true, 
       user: ownersfiltered,
+      currentUserPets: ownersfiltered.pets,
       //might cause problem for edge case of multiple sign ups in a row:
       newSignup: false})
       console.log(ownersfiltered)
-      this.setLocalStorage(ownersfiltered[0])
+      // this.setLocalStorage(ownersfiltered[0])
       this.getFreshPets()
     }
     
@@ -213,41 +229,52 @@ class App extends React.Component {
   // API calls that collect pets only
   // set up your components to account for the async pet loading, something in the meantime to load
 
-  showPets = () => {return this.localUser().pets}
+  showPets = () => {return this.state.user.pets}
 
 
   render() {
-    // console.log(this.state.pets)
     // debugger;
     return (
       <div>
         {/* {console.log(this.localUser().pets)} */}
         <Router>
-          <NavBar />
+        <NavBar />
 
+        <Route
+          path="/"
+          exact
+          render={() => <HomepageLayout />}
+        />
+              
           <Route
-            path="/"
-            exact
-            render={() => <HomepageLayout />}
-          />
-                
-           <Route
-            path="/login"
-            exact
-            render={() => 
-            <LoginSignupContainer onLogInUser={this.onLogInUser } loggedInState={this.state.isLoggedIn}/>}
-          />
+          path="/login"
+          exact
+          render={() => 
+          <LoginSignupContainer 
+          onLogInUser={this.onLogInUser } 
+          loggedInState={this.state.isLoggedIn}/>}
+         />
         
         <Route
           path="/signup"
           exact
-          render={()=> <SignupForm onAddUser={this.addUser} newSignUpState={this.state.newSignup}/>}
+          render={()=> 
+          <SignupForm 
+          onAddUser={this.addUser} 
+          newSignUpState={this.state.newSignup}/>}
         />
         
         <Route
           path="/profile"
           exact
-          render={() => <MyProfile  currentUserPets={this.state.currentUserPets} updatePets={this.updatePets} user={this.localUser()} postPet={this.postPet} freshPetsFunction={this.getFreshPets} deletePet={this.deletePet}/>}
+          render={() => 
+          <MyProfile  
+          currentUserPets={this.state.currentUserPets} 
+          updatePets={this.updatePets} 
+          user={this.state.user} 
+          postPet={this.postPet} 
+          freshPetsFunction={this.getFreshPets} 
+          deletePet={this.deletePet}/>}
         />
 
         {/* <Route 
