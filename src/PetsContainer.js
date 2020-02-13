@@ -24,16 +24,16 @@ class PetsContainer extends React.Component {
 //Delete: .then(pet=> this.deleteState(pet))
 //
 
-//   addPet = pet => {
-// console.log("console logging currentUserPets:", this.state)
-// console.log(pet)
-//     this.setState(prevState => {
-//       return{
-//         currentUserPets: [...prevState.currentUserPets, this.props.pets]
-//       }
-//       },
-//        () => this.postPet(pet))
-//   }
+  addPet = pet => {
+console.log("console logging currentUserPets:", this.state)
+console.log(pet)
+    this.setState(prevState => {
+      return{
+        currentUserPets: [...prevState.currentUserPets, this.props.pets]
+      }
+      },
+       () => this.postPet(pet))
+  }
 
 
   //iterate over all pets for this specific owner and create a PetCard for them
