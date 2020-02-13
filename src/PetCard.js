@@ -3,6 +3,10 @@ import { Card, Icon, Image, Button } from 'semantic-ui-react'
 
 
 const PetCard = (props) => (
+  // handleDeleteButton = () => {
+  //   props.deletePet(props.pet)
+  // }
+
       <Card>
         {console.log(props.pet.name)}
         <Image src={props.pet.image} wrapped ui={false} />
@@ -16,7 +20,8 @@ const PetCard = (props) => (
           </Card.Description>
         </Card.Content>
         <button className="ui button">Edit Pet</button>
-        <button className="ui button">Delete Pet</button>
+        <button className="ui button" >Delete Pet</button>
+        {/* onClick={handleDeleteButton()} */}
       </Card>
 )
 

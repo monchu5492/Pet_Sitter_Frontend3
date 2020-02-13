@@ -41,7 +41,7 @@ class App extends React.Component {
 
     setLocalStorage = (user) => {
       localStorage.setItem('user', JSON.stringify(user))
-      // let localUserId = localStorage.getItem('user').id
+      let localUserId = localStorage.getItem('user').id
     }
 
     localUser = () => {
@@ -51,11 +51,18 @@ class App extends React.Component {
  
   componentDidMount() {
     this.getAllOwners()
+
+    if (localStorage.getItem('user')) {
     this.getFreshPets()
+    }
 
     fetch(petsURL)
     .then(res => res.json())
-    .then(pets => this.setState({...this.state, pets: pets}))
+    .then(pets => {
+      // console.log(pets);
+      // debugger;
+      this.setState({...this.state, pets: pets})
+    })
   }
 
   getAllOwners = () => {
@@ -110,6 +117,7 @@ class App extends React.Component {
       newSignup: false})
       console.log(ownersfiltered)
       this.setLocalStorage(ownersfiltered[0])
+      this.getFreshPets()
     }
     
 
@@ -154,6 +162,12 @@ class App extends React.Component {
   }
 
 
+  // deletePet = (pet) => {
+  //   this.state.currentUserPets.filter( pet => pet.id == pet)
+  //   console.log(currentUserPets)
+  // }
+
+
   // this.state.currentUserPets[0]
   // renderOwnersProfile = (firstName) => {
   //   console.log(firstName)
@@ -178,10 +192,11 @@ class App extends React.Component {
 
 
   render() {
-    console.log(this.state.pets)
+    // console.log(this.state.pets)
+    // debugger;
     return (
       <div>
-        {console.log(this.localUser().pets)}
+        {/* {console.log(this.localUser().pets)} */}
         <Router>
           <NavBar />
 
