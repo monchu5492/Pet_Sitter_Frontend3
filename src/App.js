@@ -161,13 +161,38 @@ class App extends React.Component {
       // this.setState({...this.state, currentUserPets: this.state.currentUserPets.push(pet)}))
   }
 
+  
+  deletePet = (pet) => {
+    const petsToKeep = this.state.currentUserPets.filter( i => i.id != pet.id)
+    console.log("CONSOLE LOGGING DELETE FUNCTION:", petsToKeep)
+    
+    this.setState({
+      currentUserPets: petsToKeep 
+    }, () => this.deletePetPost(pet))
+    
+    console.log(pet)
+  }
+  
+  deletePetPost = (pet) => {
+    console.log(pet)
+    fetch(`http://localhost:3000/pets/${pet.id}`, {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(res => res.json())
+      .then(() => console.log("deleted pet"))
+  }
 
-  // deletePet = (pet) => {
-  //   this.state.currentUserPets.filter( pet => pet.id == pet)
-  //   console.log(currentUserPets)
-  // }
-
-
+  // method: "DELETE",
+  // headers: {
+  //   "Content-Type": "application/json",
+  //   "Accept": "application/json"
+  // },
+  // body: JSON.stringify({
+  //   currentUserPets: {...currentUserPets, id: this.props.pet.id}
+  // // })
   // this.state.currentUserPets[0]
   // renderOwnersProfile = (firstName) => {
   //   console.log(firstName)
@@ -222,7 +247,7 @@ class App extends React.Component {
         <Route
           path="/profile"
           exact
-          render={() => <MyProfile  currentUserPets={this.state.currentUserPets} updatePets={this.updatePets} user={this.localUser()} postPet={this.postPet} freshPetsFunction={this.getFreshPets}/>}
+          render={() => <MyProfile  currentUserPets={this.state.currentUserPets} updatePets={this.updatePets} user={this.localUser()} postPet={this.postPet} freshPetsFunction={this.getFreshPets} deletePet={this.deletePet}/>}
         />
 
         {/* <Route 

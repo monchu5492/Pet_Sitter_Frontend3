@@ -73,7 +73,7 @@ class PetsContainer extends React.Component {
 
     // let fresheningUpPets = this.props.freshPetsFunction()
     return this.props.currentUserPets.map(pet => {
-      return <PetCard pet={pet} />
+      return <PetCard pet={pet} deletePet={this.props.deletePet}/>
     }
     )
   }
