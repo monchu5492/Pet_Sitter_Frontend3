@@ -6,8 +6,6 @@ import LoginSignupContainer from  './LoginSignupContainer'
 import MyProfile from './MyProfile'
 import SignupForm from './SignupForm'
 import PetsContainer from './PetsContainer'
-
-
 import { BrowserRouter as Router, Route } from "react-router-dom"
 
 const ownersURL = "http://localhost:3000/owners"
@@ -22,7 +20,7 @@ class App extends React.Component {
       owners: [],
       isLoggedIn: false,
       newSignup: false,
-      user: [{}],
+      user: [{u:0}],
       pets: [{}],
       currentUserPets: []
       
@@ -39,30 +37,44 @@ class App extends React.Component {
 
     
 
-    setLocalStorage = (user) => {
-      localStorage.setItem('user', JSON.stringify(user))
-      let localUserId = localStorage.getItem('user').id
-    }
+    // setLocalStorage = (user) => {
+    //   localStorage.setItem('user', JSON.stringify(user))
+    //   let localUserId = localStorage.getItem('user').id
+    // }
 
-    localUser = () => {
-      let user = JSON.parse(localStorage.getItem('user'))
-      return user
-    }
+    // localUser = () => {
+    //   let user = JSON.parse(localStorage.getItem('user'))
+    //   return user
+    // }
  
   componentDidMount() {
     this.getAllOwners()
 
-    if (localStorage.getItem('user')) {
-    this.getFreshPets()
+    if (this.state.user){
+    // this.getFreshPets()
+    console.log("user is in state")
+    } else {
+      return(
+        <div>
+        <Router>
+          <Route
+            path="/"
+            exact
+            render={() => <HomepageLayout />}
+          />
+        </Router>
+        </div>
+
+      )
     }
 
-    fetch(petsURL)
-    .then(res => res.json())
-    .then(pets => {
-      // console.log(pets);
-      // debugger;
-      this.setState({...this.state, pets: pets})
-    })
+    // fetch(petsURL)
+    // .then(res => res.json())
+    // .then(pets => {
+    //   // console.log(pets);
+    //   // debugger;
+    //   this.setState({...this.state, pets: pets})
+    // })
   }
 
   getAllOwners = () => {
@@ -80,7 +92,7 @@ class App extends React.Component {
 
   filterFreshPets = (pets) => {
     let filteredPets = pets.filter(pet => {
-      return pet.owner.id == this.localUser().id
+      return pet.owner.id == this.state.user.id
     })
     console.log("LOGGING FILTERED PETS:", filteredPets)
       // console.log(pet.owner.id)
@@ -116,7 +128,7 @@ class App extends React.Component {
       //might cause problem for edge case of multiple sign ups in a row:
       newSignup: false})
       console.log(ownersfiltered)
-      this.setLocalStorage(ownersfiltered[0])
+      // this.setLocalStorage(ownersfiltered[0])
       this.getFreshPets()
     }
     
@@ -146,7 +158,7 @@ class App extends React.Component {
   }
 
   postPet = (pet) => { 
-    console.log(this.localUser())
+    // console.log(this.localUser())
      fetch(petsURL, {
       method: "POST",
       headers: {
@@ -213,7 +225,7 @@ class App extends React.Component {
   // API calls that collect pets only
   // set up your components to account for the async pet loading, something in the meantime to load
 
-  showPets = () => {return this.localUser().pets}
+  showPets = () => {return this.state.user.pets}
 
 
   render() {
@@ -247,7 +259,7 @@ class App extends React.Component {
         <Route
           path="/profile"
           exact
-          render={() => <MyProfile  currentUserPets={this.state.currentUserPets} updatePets={this.updatePets} user={this.localUser()} postPet={this.postPet} freshPetsFunction={this.getFreshPets} deletePet={this.deletePet}/>}
+          render={() => <MyProfile  currentUserPets={this.state.currentUserPets} updatePets={this.updatePets} user={this.state.user} postPet={this.postPet} freshPetsFunction={this.getFreshPets} deletePet={this.deletePet}/>}
         />
 
         {/* <Route 
