@@ -1,18 +1,18 @@
 import React from 'react'
 import { Image, Header, Divider } from 'semantic-ui-react'
 import PetsContainer from './PetsContainer'
-import PetCard from './PetCard'
+
 
 // testing note #1 alice
 
 const ProfilePicture = (props) => (
   <>
     <div className="profile-top-section">
-    {console.log(props.user[0])}
+    {console.log(props.pets)}
 
-    <Image className="profilepic" src={props.user[0].user_image} size='medium' circular />
+    <Image className="profilepic" src={props.user.user_image} size='medium' circular />
     <Header className="profilename" as='h3' style={{ fontSize: '2em' }}>
-    {props.user[0].name}
+    {props.user.name}
     </Header>
 
     </div>
@@ -25,8 +25,8 @@ const ProfilePicture = (props) => (
       <p>My Pets</p>
     </Divider>
 
-    <PetsContainer user={props.user}/>
-    <PetCard/>
+    <PetsContainer currentUserPets={props.currentUserPets} updatePets={props.updatePets} user={props.user} freshPetsFunction={props.freshPetsFunction} />
+    
   </>
 )
 

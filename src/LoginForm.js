@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom'
 // import { Button, Form } from 'semantic-ui-react'
 const INITIAL_STATE = {
   name: ""
@@ -20,6 +21,8 @@ class LoginForm extends React.Component {
 
   render() {
     return(
+      //Want to redirect user to MyProfile after Login
+      // this.props.isLoggedIn ? ( <Redirect to="/profile"/> ) : (
       <>
       <h3 className="form-title">Please Login to view your account</h3>
       <form className="ui form" onSubmit={this.handleOnSubmit}>
@@ -30,7 +33,8 @@ class LoginForm extends React.Component {
       <button type="submit" className="ui button">Submit</button>
     </form>
     </>
-    )
+      )
+    // )
   }
 }
 

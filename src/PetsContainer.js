@@ -1,57 +1,97 @@
 import React from 'react'
+import LoginForm from './LoginForm'
 import PetCard from './PetCard.js'
 import PetForm from './PetForm'
+import LoginSignupContainer from './LoginSignupContainer.js'
 const petsURL = "http://localhost:3000/pets"
 
 class PetsContainer extends React.Component {
 
-  constructor() {
-    super()
-    this.state ={
-      currentUserPets:[]
+  constructor(props) {
+    super(props)
+    this.state = {
+      currentUserPets: []
     }
   }
-  
 
-  addPet = pet=> {
-    this.setState(prevState => {
-      return {
-        currentUserPets: [...prevState.currentUserPets, pet]
-      }
-    }, () => this.postPet(pet))
+  componentDidMount() {
+    this.setState({
+      currentUserPets: this.props.pets
+    })
+    
   }
- 
-  
-  //iterate over all pets for this specific owner and create a PetCard for them
 
-  postPet = (pet) => { 
-    console.log(pet)
-     fetch(petsURL, {
+
+//   addPet = pet => {
+// console.log("console logging currentUserPets:", this.state)
+// console.log(pet)
+//     this.setState(prevState => {
+//       return{
+//         currentUserPets: [...prevState.currentUserPets, this.props.pets]
+//       }
+//       },
+//        () => this.postPet(pet))
+//   }
+
+
+  //iterate over all pets for this specific owner and create a PetCard for them
+  postPet = (pet) => {
+    // let newPets = this.state.currentUserPets.push(pet)
+    fetch(petsURL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
       body: JSON.stringify({
-        pet
+        pet: { ...pet, owner_id: this.props.user.id }
       })
     }).then(res => res.json())
-      .then(data => console.log(data))
-      
+      .then(pet => this.props.freshPetsFunction(pet))
+    // this.setState({currentUserPets: this.state.currentUserPets[0]})
   }
+  // getFreshPets = () => {
+  //   fetch(petsURL)
+  //   .then(res => res.json())
+  //   .then(pets => this.filterFreshPets(pets))
+  // }
+
+  // filterFreshPets = (pets) => {
+  //   let filteredPets = pets.filter(pet => 
+  //   pet.owner.id == this.props.user.id)
+  //   // console.log(filteredPets)
+  // }
+  
+  // pets.filter(pet => pet.owner_id == this.props.user.id)
+  // Create Pet Cards:
 
   everyPet = () => {
-    return this.props.pets.map((pet, index) => {
-      return <PetCard pet={pet} key={index} />
-    })
+    // console.log(this.props.getFreshPets())
+    console.log("PETS CONTAINER PROPS:", this.props.user.pets)
+
+    // let fresheningUpPets = this.props.freshPetsFunction()
+    return this.props.currentUserPets.map(pet => {
+      return <PetCard pet={pet} />
+    }
+    )
+    
   }
 
+
+
   render() {
-    return(
+
+    return (
       <div className="ui grid container">
+        {/* {console.log(this.state)} */}
+        {/* /* {console.log(this.props.user)} */}
+        {/* {console.log(this.props.pets)} */}
         {/* <button class="ui button" >Add a Pet</button> */}
-        <PetForm addPet={this.addPet}/>
+        <PetForm addPet={this.postPet} user={this.props.user} />
         {/* everyPet() */}
+
+        {/* <PetCard/> */}
+        {this.everyPet()}
       </div>
     )
   }

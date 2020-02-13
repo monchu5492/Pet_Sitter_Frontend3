@@ -2,25 +2,20 @@ import React from 'react'
 import { Card, Icon, Image, Button } from 'semantic-ui-react'
 
 
-const PetCard = () => (
+const PetCard = (props) => (
       <Card>
-        <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
+        {console.log(props.pet.name)}
+        <Image src={props.pet.image} wrapped ui={false} />
         <Card.Content>
-          <Card.Header>Matthew</Card.Header>
+<Card.Header>{props.pet.name}</Card.Header>
           <Card.Meta>
-            <span className='date'>Joined in 2015</span>
+            <span className='date'>{props.pet.animal_type}</span>
           </Card.Meta>
           <Card.Description>
-            Matthew is a musician living in Nashville.
+            {props.pet.age}
           </Card.Description>
         </Card.Content>
-        <Card.Content extra>
-          <a href="">
-            <Icon name='user' />
-            22 Friends
-          </a>
-        </Card.Content>
-        <button class="ui button">Edit Pet</button>
+        <button className="ui button">Edit Pet</button>
       </Card>
 )
 
