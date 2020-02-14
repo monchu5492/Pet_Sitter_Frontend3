@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import HomepageLayout from './HomepageLayout'
 import NavBar from './NavBar'
-import LoginSignupContainer from  './LoginSignupContainer'
+import LoginSignupContainer from './LoginSignupContainer'
 import MyProfile from './MyProfile'
 import SignupForm from './SignupForm'
 import PetsContainer from './PetsContainer'
@@ -16,53 +16,53 @@ const notesURL = "http://localhost:3000/notes"
 class App extends React.Component {
   constructor() {
     super()
-    this.state ={
-      owners: [],
+    this.state = {
+      owners: [], //all owners, from db, and object containing all that user's pets
       isLoggedIn: false,
       newSignup: false,
-      user: [{u:0}],
-      pets: [{}],
-      currentUserPets: []
-      
+      user: [{ u: 0 }], //currently logged in user - data structure matches owners
+      pets: [{}], //all pets that exist - MAY NOT BE NEEDED
+      currentUserPets: [] //the pets that belong to the current user
+
       // user: [{
-        //   id: 8, 
-        //   name: "Mario", 
-        //   address: "657 Waters Mall", 
-        //   user_image: "https://picsum.photos/seed/jbmdqaufloldlkmoprrgfznagbhtfyapkhoflpvklyjbduohcq/250", 
-        //   background_image: "https://picsum.photos/seed/jbmdqaufloldlkmoprrgfznagbhtfyapkhoflpvklyjbduohcq/250"
-        // }]
-      }
+      //   id: 8, 
+      //   name: "Mario", 
+      //   address: "657 Waters Mall", 
+      //   user_image: "https://picsum.photos/seed/jbmdqaufloldlkmoprrgfznagbhtfyapkhoflpvklyjbduohcq/250", 
+      //   background_image: "https://picsum.photos/seed/jbmdqaufloldlkmoprrgfznagbhtfyapkhoflpvklyjbduohcq/250"
+      // }]
     }
+  }
 
 
-    
 
-    // setLocalStorage = (user) => {
-    //   localStorage.setItem('user', JSON.stringify(user))
-    //   let localUserId = localStorage.getItem('user').id
-    // }
 
-    // localUser = () => {
-    //   let user = JSON.parse(localStorage.getItem('user'))
-    //   return user
-    // }
- 
+  // setLocalStorage = (user) => {
+  //   localStorage.setItem('user', JSON.stringify(user))
+  //   let localUserId = localStorage.getItem('user').id
+  // }
+
+  // localUser = () => {
+  //   let user = JSON.parse(localStorage.getItem('user'))
+  //   return user
+  // }
+
   componentDidMount() {
     this.getAllOwners()
 
-    if (this.state.user){
-    // this.getFreshPets()
-    console.log("user is in state")
+    if (this.state.user) {
+      // this.getFreshPets()
+      console.log("user is in state")
     } else {
-      return(
+      return (
         <div>
-        <Router>
-          <Route
-            path="/"
-            exact
-            render={() => <HomepageLayout />}
-          />
-        </Router>
+          <Router>
+            <Route
+              path="/"
+              exact
+              render={() => <HomepageLayout />}
+            />
+          </Router>
         </div>
 
       )
@@ -79,14 +79,14 @@ class App extends React.Component {
 
   getAllOwners = () => {
     fetch(ownersURL)
-    .then(res => res.json())
-    .then(owners => this.setState({ owners: owners}))
+      .then(res => res.json())
+      .then(owners => this.setState({ owners: owners }))
   }
 
-  getFreshPets = () => {
+  getFreshPets = () => { //refresh the currentUserPets array
     fetch(petsURL)
-    .then(res => res.json())
-    .then(pets => this.filterFreshPets(pets))
+      .then(res => res.json())
+      .then(pets => this.filterFreshPets(pets))
   }
 
 
@@ -95,11 +95,11 @@ class App extends React.Component {
       return pet.owner.id == this.state.user.id
     })
     console.log("LOGGING FILTERED PETS:", filteredPets)
-      // console.log(pet.owner.id)
-      // console.log ("LOCALUSER in App.js:", this.localUser().id )
+    // console.log(pet.owner.id)
+    // console.log ("LOCALUSER in App.js:", this.localUser().id )
     // pet.owner.id == this.props.user.id)
     this.setState(
-      {currentUserPets: filteredPets}
+      { currentUserPets: filteredPets }
     )
   }
 
@@ -108,8 +108,8 @@ class App extends React.Component {
   // at the end of the .then, take the JSON data (newpet) call a function to:
   // query the database for the pet (getfreshpets) that match the user id (from props.user), send those to PetContainer
   // in petContainer -> filter over freshpets and create a PetCard for each 
- 
-  
+
+
   // updatePets = (pet) => {
   //   console.log("working")
   //   let newPetsArray = this.state.pets.push(pet)
@@ -120,22 +120,30 @@ class App extends React.Component {
 
   // Login Feature, save state as user
   onLogInUser = (username) => {
-    console.log(username)
-    this.getAllOwners(username)
+    console.log("WE TRIED")
+    // console.log(username)
+    // this.getAllOwners()
     let ownersfiltered = this.state.owners.filter(owner => owner.name == username)
-    this.setState({isLoggedIn: true, 
-      user: ownersfiltered,
-      currentUserPets: ownersfiltered.pets,
-      //might cause problem for edge case of multiple sign ups in a row:
-      newSignup: false})
+    console.log(this.state.owners)
+    if (ownersfiltered.length === 1) {
+      console.log("OWNER FOUND", ownersfiltered[0])
+      this.setState({
+        isLoggedIn: true,
+        user: ownersfiltered[0],
+        currentUserPets: ownersfiltered[0].pets,
+        newSignup: false
+      })
       console.log(ownersfiltered)
       // this.setLocalStorage(ownersfiltered[0])
       this.getFreshPets()
+    } else {
+
     }
-    
+  }
 
 
-//Sign Up Feature: Adding User to state of owners
+
+  //Sign Up Feature: Adding User to state of owners
   addUser = owner => {
     this.setState(prevState => {
       return {
@@ -145,7 +153,7 @@ class App extends React.Component {
     }, () => this.postOwner(owner))
   }
 
-//Sign Up Feature: POSTING User to Database
+  //Sign Up Feature: POSTING User to Database
   postOwner = (owner) => {
     fetch(ownersURL, {
       method: "POST",
@@ -158,34 +166,34 @@ class App extends React.Component {
       .then(data => console.log(data))
   }
 
-  postPet = (pet) => { 
+  postPet = (pet) => {
     // console.log(this.localUser())
-     fetch(petsURL, {
+    fetch(petsURL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
       body: JSON.stringify({
-        pet: {...pet, owner_id: this.props.user.id}
+        pet: { ...pet, owner_id: this.props.user.id }
       })
     }).then(res => res.json())
       .then(data => this.getFreshPets())
-      // this.setState({...this.state, currentUserPets: this.state.currentUserPets.push(pet)}))
+    // this.setState({...this.state, currentUserPets: this.state.currentUserPets.push(pet)}))
   }
 
-  
+
   deletePet = (pet) => {
-    const petsToKeep = this.state.currentUserPets.filter( i => i.id != pet.id)
+    const petsToKeep = this.state.currentUserPets.filter(i => i.id != pet.id)
     console.log("CONSOLE LOGGING DELETE FUNCTION:", petsToKeep)
-    
+
     this.setState({
-      currentUserPets: petsToKeep 
+      currentUserPets: petsToKeep
     }, () => this.deletePetPost(pet))
-    
+
     console.log(pet)
   }
-  
+
   deletePetPost = (pet) => {
     console.log(pet)
     fetch(`http://localhost:3000/pets/${pet.id}`, {
@@ -194,7 +202,7 @@ class App extends React.Component {
         "Content-Type": "application/json"
       }
     })
-    .then(res => res.json())
+      .then(res => res.json())
       .then(() => console.log("deleted pet"))
   }
 
@@ -218,15 +226,15 @@ class App extends React.Component {
   //   console.log("ello mate")
   // }
 
-  
 
 
-//SUGGESTIONS
+
+  //SUGGESTIONS
   // Global User object or Id
   // API calls that collect pets only
   // set up your components to account for the async pet loading, something in the meantime to load
 
-  showPets = () => {return this.state.user.pets}
+  showPets = () => { return this.state.user.pets }
 
 
   render() {
@@ -235,51 +243,51 @@ class App extends React.Component {
       <div>
         {/* {console.log(this.localUser().pets)} */}
         <Router>
-        <NavBar />
+          <NavBar />
 
-        <Route
-          path="/"
-          exact
-          render={() => <HomepageLayout />}
-        />
-              
           <Route
-          path="/login"
-          exact
-          render={() => 
-          <LoginSignupContainer 
-          onLogInUser={this.onLogInUser } 
-          loggedInState={this.state.isLoggedIn}/>}
-         />
-        
-        <Route
-          path="/signup"
-          exact
-          render={()=> 
-          <SignupForm 
-          onAddUser={this.addUser} 
-          newSignUpState={this.state.newSignup}/>}
-        />
-        
-        <Route
-          path="/profile"
-          exact
-          render={() => 
-          <MyProfile  
-          currentUserPets={this.state.currentUserPets} 
-          updatePets={this.updatePets} 
-          user={this.state.user} 
-          postPet={this.postPet} 
-          freshPetsFunction={this.getFreshPets} 
-          deletePet={this.deletePet}/>}
-        />
+            path="/"
+            exact
+            render={() => <HomepageLayout />}
+          />
 
-        {/* <Route 
+          <Route
+            path="/login"
+            exact
+            render={() =>
+              <LoginSignupContainer
+                onLogInUser={this.onLogInUser}
+                loggedInState={this.state.isLoggedIn} />}
+          />
+
+          <Route
+            path="/signup"
+            exact
+            render={() =>
+              <SignupForm
+                onAddUser={this.addUser}
+                newSignUpState={this.state.newSignup} />}
+          />
+
+          <Route
+            path="/profile"
+            exact
+            render={() =>
+              <MyProfile
+                currentUserPets={this.state.currentUserPets}
+                updatePets={this.updatePets}
+                user={this.state.user}
+                postPet={this.postPet}
+                freshPetsFunction={this.getFreshPets}
+                deletePet={this.deletePet} />}
+          />
+
+          {/* <Route 
           path="/pet"
           exact
           render={() => <PetsContainer user={this.localUser()} pets={this.showPets()} postPet={this.postPet}/>}
         /> */}
-          
+
 
         </Router>
       </div>
