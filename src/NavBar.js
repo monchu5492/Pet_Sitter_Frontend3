@@ -32,12 +32,7 @@ export default class MenuExampleSecondary extends Component {
           active={activeItem === 'profile'}
           onClick={this.handleItemClick}
         />
-        <Menu.Item
-          as={NavLink} to="/pets"
-          name='My Pets'
-          active={activeItem === 'mypets'}
-          onClick={this.handleItemClick}
-        />
+
         <Menu.Menu position='right'>
           
         <Menu.Item

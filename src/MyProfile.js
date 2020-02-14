@@ -25,7 +25,13 @@ const ProfilePicture = (props) => (
       <p>My Pets</p>
     </Divider>
 
-    <PetsContainer currentUserPets={props.currentUserPets} updatePets={props.updatePets} user={props.user} freshPetsFunction={props.freshPetsFunction} deletePet={props.deletePet}/>
+    <PetsContainer 
+    currentUserPets={props.currentUserPets} 
+    updatePets={props.updatePets} 
+    user={props.user} 
+    freshPetsFunction={props.freshPetsFunction} 
+    editPet={props.editPet} 
+    deletePet={props.deletePet} />
     
   </>
 )

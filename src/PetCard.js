@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, Icon, Image, Button } from 'semantic-ui-react'
+import EditPetForm from './EditPetForm'
 
 
 
@@ -7,6 +8,13 @@ class PetCard extends React.Component {
 // handleDeleteButton = () => {
   //   props.deletePet(props.pet)
   // }
+  //testing modal click functionality
+  state = { open: false }
+  closeConfigShow = (closeOnEscape, closeOnDimmerClick) => () => {
+    this.setState({ closeOnEscape, closeOnDimmerClick, open: true })
+  }
+  close = () => this.setState({ open: false })
+//-------------------------------------------
 
   handleDeleteButton = () => {
     this.props.deletePet(this.props.pet)
@@ -15,6 +23,7 @@ class PetCard extends React.Component {
   }
 
   render() {
+    const { open, closeOnEscape, closeOnDimmerClick } = this.state
     return(
       <Card>
         {console.log(this.props.pet.name)}
@@ -28,7 +37,8 @@ class PetCard extends React.Component {
             {this.props.pet.age}
           </Card.Description>
         </Card.Content>
-        <button className="ui button">Edit Pet</button>
+        <button className="ui button" onClick={this.closeConfigShow(false, true)}>Edit Pet</button>
+        <EditPetForm editPet={this.props.editPet}/>
         <button className="ui button" onClick={this.handleDeleteButton}>Delete Pet</button>
         
       </Card>

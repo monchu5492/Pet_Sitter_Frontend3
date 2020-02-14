@@ -50,7 +50,7 @@ console.log(pet)
       })
     }).then(res => res.json())
       .then(pet => this.props.freshPetsFunction(pet))
-    // this.setState({currentUserPets: this.state.currentUserPets[0]})
+    //  this.setState({currentUserPets: this.state.currentUserPets[0]})
   }
   // getFreshPets = () => {
   //   fetch(petsURL)
@@ -70,19 +70,25 @@ console.log(pet)
   everyPet = () => {
     // console.log(this.props.getFreshPets())
     console.log("PETS CONTAINER PROPS:", this.props.user.pets)
-
+    // if (this.props.currentUserPets === 1) {
     // let fresheningUpPets = this.props.freshPetsFunction()
-    return this.props.currentUserPets.map(pet => {
-      return <PetCard pet={pet} deletePet={this.props.deletePet}/>
+    if (!this.props.currentUserPets) {
+      return <PetForm addPet={this.postPet} user={this.props.user} />
     }
+    return this.props.currentUserPets.map(pet => {
+      return <PetCard pet={pet} editPet={this.props.editPet} deletePet={this.props.deletePet}/>
+    }
+  
     )
+//  }
   }
 
 
 
   render() {
-
+    
     return (
+      
       <div className="ui grid container">
         {/* {console.log(this.state)} */}
         {/* /* {console.log(this.props.user)} */}

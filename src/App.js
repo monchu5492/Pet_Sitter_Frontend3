@@ -207,6 +207,20 @@ class App extends React.Component {
       .then(() => console.log("deleted pet"))
   }
 
+  editPet = (pet) => {
+    fetch(petsURL, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        pet: { ...pet, owner_id: this.props.user.id }
+      })
+    }).then(res => res.json())
+      .then(data => this.getFreshPets())
+  }
+
   // method: "DELETE",
   // headers: {
   //   "Content-Type": "application/json",
@@ -280,7 +294,9 @@ class App extends React.Component {
                 user={this.state.user}
                 postPet={this.postPet}
                 freshPetsFunction={this.getFreshPets}
-                deletePet={this.deletePet} />}
+                editPet={this.editPet}
+                deletePet={this.deletePet} 
+                newSignup={this.state.newSignup}/>}
           />
 
           {/* <Route 
