@@ -125,6 +125,7 @@ class App extends React.Component {
     let ownersfiltered = this.state.owners.filter(owner => owner.name == username)
     this.setState({isLoggedIn: true, 
       user: ownersfiltered,
+      currentUserPets: ownersfiltered.pets,
       //might cause problem for edge case of multiple sign ups in a row:
       newSignup: false})
       console.log(ownersfiltered)
@@ -229,37 +230,48 @@ class App extends React.Component {
 
 
   render() {
-    // console.log(this.state.pets)
     // debugger;
     return (
       <div>
         {/* {console.log(this.localUser().pets)} */}
         <Router>
-          <NavBar />
+        <NavBar />
 
+        <Route
+          path="/"
+          exact
+          render={() => <HomepageLayout />}
+        />
+              
           <Route
-            path="/"
-            exact
-            render={() => <HomepageLayout />}
-          />
-                
-           <Route
-            path="/login"
-            exact
-            render={() => 
-            <LoginSignupContainer onLogInUser={this.onLogInUser } loggedInState={this.state.isLoggedIn}/>}
-          />
+          path="/login"
+          exact
+          render={() => 
+          <LoginSignupContainer 
+          onLogInUser={this.onLogInUser } 
+          loggedInState={this.state.isLoggedIn}/>}
+         />
         
         <Route
           path="/signup"
           exact
-          render={()=> <SignupForm onAddUser={this.addUser} newSignUpState={this.state.newSignup}/>}
+          render={()=> 
+          <SignupForm 
+          onAddUser={this.addUser} 
+          newSignUpState={this.state.newSignup}/>}
         />
         
         <Route
           path="/profile"
           exact
-          render={() => <MyProfile  currentUserPets={this.state.currentUserPets} updatePets={this.updatePets} user={this.state.user} postPet={this.postPet} freshPetsFunction={this.getFreshPets} deletePet={this.deletePet}/>}
+          render={() => 
+          <MyProfile  
+          currentUserPets={this.state.currentUserPets} 
+          updatePets={this.updatePets} 
+          user={this.state.user} 
+          postPet={this.postPet} 
+          freshPetsFunction={this.getFreshPets} 
+          deletePet={this.deletePet}/>}
         />
 
         {/* <Route 
