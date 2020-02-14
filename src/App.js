@@ -20,6 +20,7 @@ class App extends React.Component {
       owners: [], //all owners, from db, and object containing all that user's pets
       isLoggedIn: false,
       newSignup: false,
+
       user: [{ u: 0 }], //currently logged in user - data structure matches owners
       pets: [{}], //all pets that exist - MAY NOT BE NEEDED
       currentUserPets: [] //the pets that belong to the current user
@@ -257,7 +258,7 @@ class App extends React.Component {
             render={() =>
               <LoginSignupContainer
                 onLogInUser={this.onLogInUser}
-                loggedInState={this.state.isLoggedIn} />}
+                isLoggedIn={this.state.isLoggedIn} />}
           />
 
           <Route

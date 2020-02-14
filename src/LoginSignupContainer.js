@@ -19,7 +19,7 @@ export default class LoginSignupContainer extends React.Component {
   render() {
       return(
         <>
-        <LoginForm onLogInUser={this.props.onLogInUser} userState={this.props.userState}/>
+        <LoginForm onLogInUser={this.props.onLogInUser} userState={this.props.userState} isLoggedIn={this.props.isLoggedIn}/>
   
         </>
       )

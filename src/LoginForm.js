@@ -21,6 +21,7 @@ class LoginForm extends React.Component {
 
   render() {
     return(
+      this.props.isLoggedIn ? ( <Redirect to="/profile"/> ) : (
       //Want to redirect user to MyProfile after Login
       // this.props.isLoggedIn ? ( <Redirect to="/profile"/> ) : (
       <>
@@ -34,6 +35,7 @@ class LoginForm extends React.Component {
     </form>
     </>
       )
+    )
     // )
   }
 }
