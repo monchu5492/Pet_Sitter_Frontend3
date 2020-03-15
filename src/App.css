@@ -56,9 +56,15 @@ h3.form-title {
   text-align: center;
 }
 .ui.medium.image {
-  margin:auto;
+  margin: auto;
 }
 
 .profilename {
   text-align: center;
+}
+
+button#edit.ui.button {
+  font-size: 1rem;
+  margin: 0 -1px;
+  width: calc(100% + 2px);
 }
