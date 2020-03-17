@@ -20,7 +20,7 @@ class App extends React.Component {
       isLoggedIn: false,
       newSignup: false,
 
-      user: [{ u: 0 }], //currently logged in user - data structure matches owners
+      user: [{}], //currently logged in user - data structure matches owners
       pets: [{}], //all pets that exist - MAY NOT BE NEEDED
       currentUserPets: [] //the pets that belong to the current user
 
@@ -215,6 +215,14 @@ class App extends React.Component {
       .then(data => this.getFreshPets());
   };
 
+  logout = () => {
+    this.setState({
+      currentUserPets: [],
+      isLoggedIn: false,
+      user: [{}],
+      pets: [{}]
+    });
+  };
   // method: "DELETE",
   // headers: {
   //   "Content-Type": "application/json",
@@ -250,7 +258,7 @@ class App extends React.Component {
       <div>
         {/* {console.log(this.localUser().pets)} */}
         <Router>
-          <NavBar />
+          <NavBar logout={this.logout} user={this.state.user} />
 
           <Route path="/" exact render={() => <HomepageLayout />} />
 
@@ -275,23 +283,24 @@ class App extends React.Component {
               />
             )}
           />
-
-          <Route
-            path="/profile"
-            exact
-            render={() => (
-              <MyProfile
-                currentUserPets={this.state.currentUserPets}
-                updatePets={this.updatePets}
-                user={this.state.user}
-                postPet={this.postPet}
-                freshPetsFunction={this.getFreshPets}
-                editPet={this.editPet}
-                deletePet={this.deletePet}
-                newSignup={this.state.newSignup}
-              />
-            )}
-          />
+          {this.state.user ? (
+            <Route
+              path="/profile"
+              exact
+              render={() => (
+                <MyProfile
+                  currentUserPets={this.state.currentUserPets}
+                  updatePets={this.updatePets}
+                  user={this.state.user}
+                  postPet={this.postPet}
+                  freshPetsFunction={this.getFreshPets}
+                  editPet={this.editPet}
+                  deletePet={this.deletePet}
+                  newSignup={this.state.newSignup}
+                />
+              )}
+            />
+          ) : null}
           {/* <Route 
           path="/pet"
           exact

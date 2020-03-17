@@ -9,6 +9,7 @@ export default class MenuExampleSecondary extends Component {
     this.setState({ activeItem: name });
     if (name === "logout") {
       localStorage.clear();
+      this.props.logout();
     }
   };
 
@@ -31,14 +32,21 @@ export default class MenuExampleSecondary extends Component {
           active={activeItem === "about"}
           onClick={this.handleItemClick}
         />
-        <Menu.Item
-          as={NavLink}
-          to="/profile"
-          name="my profile"
-          active={activeItem === "profile"}
-          onClick={this.handleItemClick}
-        />
-
+        {this.props.user.name ? (
+          <Menu.Item
+            as={NavLink}
+            to="/profile"
+            name="my profile"
+            active={activeItem === "profile"}
+            onClick={this.handleItemClick}
+          />
+        ) : (
+          <Menu.Item
+            name="my profile"
+            active={activeItem === "profile"}
+            onClick={this.handleItemClick}
+          />
+        )}
         <Menu.Menu position="right">
           <Menu.Item
             as={NavLink}
