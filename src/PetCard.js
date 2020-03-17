@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Icon, Image, Button } from "semantic-ui-react";
 import EditPetForm from "./EditPetForm";
+import addNoteModal from "./addNoteModal";
 
 class PetCard extends React.Component {
   // handleDeleteButton = () => {
@@ -27,11 +28,15 @@ class PetCard extends React.Component {
         {console.log(this.props.pet.name)}
         <Image src={this.props.pet.image} wrapped ui={false} />
         <Card.Content>
-          <Card.Header>{this.props.pet.name}</Card.Header>
-          <Card.Meta>
+          <div id="cContent">
+            <Card.Header>{this.props.pet.name}</Card.Header>
+            {/* <Card.Meta>
             <span className="date">{this.props.pet.animal_type}</span>
-          </Card.Meta>
-          <Card.Description>{this.props.pet.age}</Card.Description>
+          </Card.Meta> */}
+            <Card.Description>{this.props.pet.age}</Card.Description>
+          </div>
+          <Button floated="right">Add Note</Button>
+          {/* <EditPetForm editPet={this.props.editPet} /> */}
         </Card.Content>
         <>
           <EditPetForm editPet={this.props.editPet} />

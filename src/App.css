@@ -40,7 +40,7 @@
 form.ui.form {
   max-width: 50%;
   margin: auto;
-  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 h3.form-title {
@@ -67,4 +67,8 @@ button#edit.ui.button {
   font-size: 1rem;
   margin: 0 -1px;
   width: calc(100% + 2px);
+}
+
+div#cContent {
+  max-width: 146px;
 }
