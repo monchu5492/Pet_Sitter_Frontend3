@@ -1,13 +1,13 @@
 import React from "react";
 import { Button, Form, Header, Image, Modal } from "semantic-ui-react";
 
-const INITIAL_STATE = {
-  name: "",
-  image: "",
-  anmial_type: "",
-  age: ""
-  //    owner_id: ""
-};
+// const INITIAL_STATE = {
+//   name: "",
+//   image: "",
+//   anmial_type: "",
+//   age: ""
+//   //    owner_id: ""
+// };
 class EditPetForm extends React.Component {
   //testing modal click functionality
   state = { open: false };
@@ -16,7 +16,20 @@ class EditPetForm extends React.Component {
   };
   close = () => this.setState({ open: false });
   //-------------------------------------------
-  state = INITIAL_STATE;
+
+  state = {
+    // INITIAL_STATE
+    id: this.props.pet.id,
+    name: this.props.pet.name,
+    image: this.props.pet.image,
+    anmial_type: this.props.pet.anmial_type,
+    age: this.props.pet.age
+  };
+
+  INITIAL_STATE() {
+    return this.state;
+  }
+
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -24,7 +37,8 @@ class EditPetForm extends React.Component {
     // debugger;
     e.preventDefault();
     this.props.editPet(this.state);
-    this.setState(INITIAL_STATE);
+    this.setState(this.INITIAL_STATE());
+    this.close();
   };
   render() {
     console.log("hit edit pet form");
@@ -53,7 +67,7 @@ class EditPetForm extends React.Component {
                 name="name"
                 value={this.state.name}
                 onChange={this.handleChange}
-                placeholder="Name"
+                placeholder={this.props.pet.name}
               />
             </div>
             <div className="field">
@@ -63,7 +77,7 @@ class EditPetForm extends React.Component {
                 name="image"
                 value={this.state.image}
                 onChange={this.handleChange}
-                placeholder="Image"
+                placeholder={this.props.pet.image}
               />
             </div>
             <div className="field">
@@ -73,7 +87,7 @@ class EditPetForm extends React.Component {
                 name="anmial_type"
                 value={this.state.anmial_type}
                 onChange={this.handleChange}
-                placeholder="Animal Type"
+                placeholder={this.props.pet.anmial_type}
               />
             </div>
             <div className="field">
@@ -83,7 +97,7 @@ class EditPetForm extends React.Component {
                 name="age"
                 value={this.state.age}
                 onChange={this.handleChange}
-                placeholder="age"
+                placeholder={this.props.pet.age}
               />
             </div>
             {/* <button type="submit" className="ui button">Submit</button> */}
@@ -93,7 +107,7 @@ class EditPetForm extends React.Component {
               Close
             </Button>
             <Button
-              onClick={this.handleFormSubmit}
+              onClick={this.handleEditButton}
               positive
               labelPosition="right"
               icon="checkmark"

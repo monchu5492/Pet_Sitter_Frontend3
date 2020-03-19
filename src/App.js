@@ -21,7 +21,7 @@ class App extends React.Component {
       newSignup: false,
 
       user: [{}], //currently logged in user - data structure matches owners
-      pets: [{}], //all pets that exist - MAY NOT BE NEEDED
+      // pets: [{}], //all pets that exist - MAY NOT BE NEEDED
       currentUserPets: [] //the pets that belong to the current user
 
       // user: [{
@@ -83,14 +83,26 @@ class App extends React.Component {
   };
 
   filterFreshPets = pets => {
-    let filteredPets = pets.filter(pet => {
-      return pet.owner.id == this.state.user.id;
-    });
-    console.log("LOGGING FILTERED PETS:", filteredPets);
-    // console.log(pet.owner.id)
-    // console.log ("LOCALUSER in App.js:", this.localUser().id )
-    // pet.owner.id == this.props.user.id)
-    this.setState({ currentUserPets: filteredPets });
+    console.log(pets);
+    if (pets.length >= 2) {
+      let filteredPets = pets.filter(pet => {
+        return pet.owner.id == this.state.user.id;
+      });
+      console.log("LOGGING FILTERED PETS:", filteredPets);
+      this.setState({ currentUserPets: filteredPets });
+    } else {
+      let filteredPet = this.state.currentUserPets.filter(pet => {
+        return pet.id != pets.id;
+      });
+      let newCurrentPets = () => {
+        filteredPet.push(pets);
+        return filteredPet;
+      };
+      this.setState({
+        currentUserPets: newCurrentPets()
+      });
+      console.log("current pets set");
+    }
   };
 
   // form for add pets: onsubmit -> post new pet to database
@@ -157,23 +169,6 @@ class App extends React.Component {
       .then(data => console.log(data));
   };
 
-  postPet = pet => {
-    // console.log(this.localUser())
-    fetch(petsURL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-      body: JSON.stringify({
-        pet: { ...pet, owner_id: this.props.user.id }
-      })
-    })
-      .then(res => res.json())
-      .then(data => this.getFreshPets());
-    // this.setState({...this.state, currentUserPets: this.state.currentUserPets.push(pet)}))
-  };
-
   deletePet = pet => {
     const petsToKeep = this.state.currentUserPets.filter(i => i.id != pet.id);
     console.log("CONSOLE LOGGING DELETE FUNCTION:", petsToKeep);
@@ -201,26 +196,27 @@ class App extends React.Component {
   };
 
   editPet = pet => {
-    fetch(petsURL, {
+    console.log(pet);
+    fetch(`http://localhost:3000/pets/${pet.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json"
       },
       body: JSON.stringify({
-        pet: { ...pet, owner_id: this.props.user.id }
+        pet: { ...pet, owner_id: this.state.user.id }
       })
     })
       .then(res => res.json())
-      .then(data => this.getFreshPets());
+      .then(pet => this.filterFreshPets(pet));
   };
 
   logout = () => {
     this.setState({
       currentUserPets: [],
       isLoggedIn: false,
-      user: [{}],
-      pets: [{}]
+      user: [{}]
+      // pets: [{}]
     });
   };
   // method: "DELETE",
@@ -283,7 +279,7 @@ class App extends React.Component {
               />
             )}
           />
-          {this.state.user ? (
+          {this.state.user.name ? (
             <Route
               path="/profile"
               exact

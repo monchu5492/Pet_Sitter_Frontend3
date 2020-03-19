@@ -39,7 +39,11 @@ class PetCard extends React.Component {
           {/* <EditPetForm editPet={this.props.editPet} /> */}
         </Card.Content>
         <>
-          <EditPetForm editPet={this.props.editPet} />
+          <EditPetForm
+            editPet={this.props.editPet}
+            user={this.props.user}
+            pet={this.props.pet}
+          />
         </>
         <button className="ui button" onClick={this.handleDeleteButton}>
           Delete Pet
