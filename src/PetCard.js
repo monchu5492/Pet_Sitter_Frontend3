@@ -1,7 +1,8 @@
 import React from "react";
 import { Card, Icon, Image, Button } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import EditPetForm from "./EditPetForm";
-import addNoteModal from "./addNoteModal";
+import addNoteModal from "./NoteContainer";
 
 class PetCard extends React.Component {
   // handleDeleteButton = () => {
@@ -35,7 +36,10 @@ class PetCard extends React.Component {
           </Card.Meta> */}
             <Card.Description>{this.props.pet.age}</Card.Description>
           </div>
-          <Button floated="right">Add Note</Button>
+          <Button as={Link} to="/notes">
+            Add a Note
+          </Button>
+          {/* <Button floated="right">Add Note</Button> */}
           {/* <EditPetForm editPet={this.props.editPet} /> */}
         </Card.Content>
         <>

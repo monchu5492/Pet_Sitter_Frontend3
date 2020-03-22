@@ -7,6 +7,7 @@ import MyProfile from "./MyProfile";
 import SignupForm from "./SignupForm";
 import PetsContainer from "./PetsContainer";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import NoteContainer from "./NoteContainer";
 
 const ownersURL = "http://localhost:3000/owners";
 const petsURL = "http://localhost:3000/pets";
@@ -302,6 +303,7 @@ class App extends React.Component {
           exact
           render={() => <PetsContainer user={this.localUser()} pets={this.showPets()} postPet={this.postPet}/>}
         /> */}
+          <Route path="/notes" exact render={() => <NoteContainer />} />
         </Router>
       </div>
     );
