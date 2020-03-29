@@ -20,7 +20,7 @@ class App extends React.Component {
       owners: [], //all owners, from db, and object containing all that user's pets
       isLoggedIn: false,
       newSignup: false,
-
+      notedPet: "",
       user: [{}], //currently logged in user - data structure matches owners
       // pets: [{}], //all pets that exist - MAY NOT BE NEEDED
       currentUserPets: [] //the pets that belong to the current user
@@ -170,6 +170,7 @@ class App extends React.Component {
       .then(data => console.log(data));
   };
 
+  // Delete Pet Feature: instantly deletes pets, trying to set alert message
   deletePet = pet => {
     const petsToKeep = this.state.currentUserPets.filter(i => i.id != pet.id);
     console.log("CONSOLE LOGGING DELETE FUNCTION:", petsToKeep);
@@ -211,6 +212,30 @@ class App extends React.Component {
       .then(res => res.json())
       .then(pet => this.filterFreshPets(pet));
   };
+
+  handleNoteSubmit = note => {
+    fetch(notesURL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        note: note
+      })
+    })
+      .then(res => res.json())
+      .then(data =>
+        this.setState({
+          ...this.state,
+          petNotes: data
+        })
+      );
+  };
+
+  // notedPet = pet => {
+  //   this.setState({ ...this.state, notedPet: pet });
+  // };
 
   logout = () => {
     this.setState({
@@ -294,6 +319,7 @@ class App extends React.Component {
                   editPet={this.editPet}
                   deletePet={this.deletePet}
                   newSignup={this.state.newSignup}
+                  notedPet={this.notedPet}
                 />
               )}
             />
@@ -303,7 +329,17 @@ class App extends React.Component {
           exact
           render={() => <PetsContainer user={this.localUser()} pets={this.showPets()} postPet={this.postPet}/>}
         /> */}
-          <Route path="/notes" exact render={() => <NoteContainer />} />
+          <Route
+            path="/notes"
+            exact
+            render={() => (
+              <NoteContainer
+                handleNoteSubmit={this.handleNoteSubmit}
+                currentUserPets={this.state.currentUserPets}
+                petNotes={this.state.petNotes}
+              />
+            )}
+          />
         </Router>
       </div>
     );

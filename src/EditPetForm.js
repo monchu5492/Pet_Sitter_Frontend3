@@ -46,7 +46,12 @@ class EditPetForm extends React.Component {
     const { open, closeOnEscape, closeOnDimmerClick } = this.state;
     return (
       <div>
-        <Button onClick={this.closeConfigShow(false, true)} id="edit">
+        <Button
+          onClick={this.closeConfigShow(false, true)}
+          id="edit"
+          color="twitter"
+          inverted
+        >
           Edit
         </Button>
         <Modal

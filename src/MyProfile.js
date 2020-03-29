@@ -1,11 +1,12 @@
 import React from "react";
-import { Image, Header, Divider } from "semantic-ui-react";
+import { Image, Header, Divider, Segment } from "semantic-ui-react";
 import PetsContainer from "./PetsContainer";
+import { withRouter } from "react-router-dom";
 
 // testing note #1 alice
 
 const ProfilePicture = props => (
-  <>
+  <Segment inverted>
     <div className="profile-top-section">
       <Image
         className="profilepic"
@@ -13,7 +14,11 @@ const ProfilePicture = props => (
         size="medium"
         circular
       />
-      <Header className="profilename" as="h3" style={{ fontSize: "2em" }}>
+      <Header
+        className="profilename"
+        as="h3"
+        style={{ fontSize: "2em", color: "white" }}
+      >
         {props.user.name}
       </Header>
     </div>
@@ -34,8 +39,9 @@ const ProfilePicture = props => (
       freshPetsFunction={props.freshPetsFunction}
       editPet={props.editPet}
       deletePet={props.deletePet}
+      // notedPet={props.notedPet}
     />
-  </>
+  </Segment>
 );
 
 export default ProfilePicture;

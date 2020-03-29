@@ -69,42 +69,42 @@ button#edit.ui.button {
   width: calc(100% + 2px);
 }
 
-div#cContent {
+/* div#cContent {
   max-width: 146px;
-}
+  color: black;
+} */
 
 /* .ui.form .field > .selection.dropdown {
   width: %;
 } */
 
-form.ui.inverted.form.noteform {
+/* form.ui.inverted.form.noteform {
   max-width: 75%;
   margin: auto;
   margin-bottom: 5%;
-}
+} */
 
-div.ui.selection.dropdown {
+/* div.ui.selection.dropdown {
   max-width: 70%;
   margin-bottom: 14px;
-}
+} */
 
-button.ui.primary.right.floated.button.NHaddbutton {
-  float: unset;
-  margin-top: 8%;
+/* button.ui.primary.right.floated.button.NHaddbutton {
+  margin-top: 10%;
   width: 25%;
-}
+} */
 
-button#notesub {
+/* button#notesub {
   width: 30%;
 }
 
 button#notes {
   width: 30%;
-}
+} */
 
-.ui.inverted.segment {
+/* .ui.inverted.segment {
   min-height: calc(100vh - 442px);
-}
+} */
 
 .ui.inverted.vertical.center.aligned.segment {
   background-image: url(https://images.unsplash.com/photo-1522276498395-f4f68f7f8454?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2849&q=80);
