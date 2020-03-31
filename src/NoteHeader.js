@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Header, Icon, Segment } from "semantic-ui-react";
 
-const SegmentExamplePlaceholder = () => (
+const SegmentExamplePlaceholder = props => (
   // <Segment raised inverted>
   <Header textAlign="center">
     {/* <Icon name='pdf file outline' /> */}
@@ -10,6 +10,7 @@ const SegmentExamplePlaceholder = () => (
     <br></br>
     <Button
       primary
+      onClick={props.addedNote}
       className="NHaddbutton"
       style={{ marginTop: "10%", width: "25%" }}
     >

@@ -31,7 +31,12 @@ class PetCard extends React.Component {
       <Card style={{ marginRight: "28px" }}>
         {console.log(pet.name)}
         <Image src={pet.image} wrapped ui={false} />
-        <Segment className="cardseg" style={{ margin: "unset" }}>
+        <Segment
+          className="cardseg"
+          style={{
+            margin: "unset"
+          }}
+        >
           <Card.Content>
             <Card.Header style={{ color: "black" }}>
               {pet.name}

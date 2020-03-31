@@ -2,6 +2,7 @@ import React from "react";
 import LoginForm from "./LoginForm";
 import PetCard from "./PetCard.js";
 import PetForm from "./PetForm";
+import { Map, GoogleApiWrapper } from "google-maps-react";
 const petsURL = "http://localhost:3000/pets";
 
 class PetsContainer extends React.Component {

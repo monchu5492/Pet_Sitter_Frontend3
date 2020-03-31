@@ -11,13 +11,14 @@ export default class CardExampleExtraContent extends React.Component {
     // {
     //   console.log(this.props.petNotes);
     // }
+    // this.props.petNotes[0].
     if (this.props.petNotes) {
       console.log(this.props.petNotes);
       this.props.currentUserPets.filter(pet => pet.id === this.props.petNotes);
       return (
         <Card>
           <Card.Content header="About Amy" />
-          <Card.Content description={this.props.petNotes[0].description} />
+          <Card.Content description={description} />
           <Card.Content extra>
             <Icon name="user" />4 Friends
           </Card.Content>

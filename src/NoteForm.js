@@ -164,6 +164,7 @@ class FormExampleFieldControl extends Component {
           </Button>
           <Button
             floated="right"
+            onClick={this.props.addedNote()}
             primary
             style={{ marginTop: "20px", width: "30%" }}
           >

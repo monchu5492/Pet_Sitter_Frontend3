@@ -9,14 +9,23 @@ class PetsContainer extends React.Component {
 
   addednote = newState => {
     let newNotes = this.state.notes;
-    newNotes.push(newState);
-    this.setState({ addednote: !this.state.addednote, notes: newNotes });
+    if (newState) {
+      newNotes.push(newState);
+      this.setState({ addednote: !this.state.addednote, notes: newNotes });
+      // } else {
+      //   this.setState({ addednote: !this.state.addednote });
+      // }
+    }
   };
+
+  // seeNotes = () => {
+  //   this.setState({ addednote: !this.state.addednote });
+  // };
 
   render() {
     return (
       <Segment inverted>
-        <NoteHeader />
+        <NoteHeader addedNote={this.addednote} />
         {this.state.addednote === false ? (
           <NoteForm
             currentUserPets={this.props.currentUserPets}

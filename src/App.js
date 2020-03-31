@@ -5,6 +5,7 @@ import NavBar from "./NavBar";
 import LoginSignupContainer from "./LoginSignupContainer";
 import MyProfile from "./MyProfile";
 import SignupForm from "./SignupForm";
+import AboutComp from "./AboutComp";
 import PetsContainer from "./PetsContainer";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import NoteContainer from "./NoteContainer";
@@ -329,17 +330,22 @@ class App extends React.Component {
           exact
           render={() => <PetsContainer user={this.localUser()} pets={this.showPets()} postPet={this.postPet}/>}
         /> */}
-          <Route
-            path="/notes"
-            exact
-            render={() => (
-              <NoteContainer
-                handleNoteSubmit={this.handleNoteSubmit}
-                currentUserPets={this.state.currentUserPets}
-                petNotes={this.state.petNotes}
-              />
-            )}
-          />
+          {this.state.user.name ? (
+            <Route
+              path="/notes"
+              exact
+              render={() => (
+                <NoteContainer
+                  handleNoteSubmit={this.handleNoteSubmit}
+                  currentUserPets={this.state.currentUserPets}
+                  petNotes={this.state.petNotes}
+                />
+              )}
+            />
+          ) : null}
+          {this.state.user.name ? (
+            <Route path="/about" exact render={() => <AboutComp />} />
+          ) : null}
         </Router>
       </div>
     );
