@@ -9,13 +9,6 @@ class PetsContainer extends React.Component {
   //iterate over all pets for this specific owner and create a PetCard for them
   postPet = pet => {
     console.log(pet);
-    let { name, image, anmial_type, age } = pet;
-    let newPet = {
-      name: name,
-      image: image,
-      anmial_type: anmial_type,
-      age: age
-    };
     // let newPets = this.state.currentUserPets.push(pet)
     fetch(petsURL, {
       method: "POST",
@@ -24,7 +17,7 @@ class PetsContainer extends React.Component {
         Accept: "application/json"
       },
       body: JSON.stringify({
-        pet: { ...newPet, owner_id: this.props.user.id }
+        pet: { ...pet, owner_id: this.props.user.id }
       })
     })
       .then(res => res.json())
@@ -51,7 +44,6 @@ class PetsContainer extends React.Component {
           user={this.props.user}
           editPet={this.props.editPet}
           deletePet={this.props.deletePet}
-          // notedPet={this.props.notedPet}
         />
       );
     });
@@ -60,16 +52,21 @@ class PetsContainer extends React.Component {
 
   render() {
     return (
-      <>
+      <div className="ui grid container">
+        {/* {console.log(this.state)} */}
+        {/* /* {console.log(this.props.user)} */}
+        {/* {console.log(this.props.pets)} */}
+        {/* <button class="ui button" >Add a Pet</button> */}
         <PetForm
           addPet={this.postPet}
           user={this.props.user}
           editPet={this.props.editPet}
         />
-        <div className="ui grid container" style={{ marginTop: "28px" }}>
-          {this.everyPet()}
-        </div>
-      </>
+        {/* everyPet() */}
+
+        {/* <PetCard/> */}
+        {this.everyPet()}
+      </div>
     );
   }
 }

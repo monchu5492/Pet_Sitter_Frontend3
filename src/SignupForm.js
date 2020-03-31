@@ -1,10 +1,7 @@
 import React from "react";
 import { Button, Form } from "semantic-ui-react";
 import { Redirect } from "react-router-dom";
-import PlacesAutocomplete, {
-  geocodeByAddress,
-  getLatLng
-} from "react-places-autocomplete";
+
 
 const INITIAL_STATE = {
   name: "",
@@ -27,8 +24,6 @@ class SignupForm extends React.Component {
   };
 
   render() {
-    const [address, setAddress] = React.useState("");
-    const handleSelect = async value => {};
     return this.props.newSignUpState ? (
       <Redirect to="/login" />
     ) : (
@@ -47,11 +42,7 @@ class SignupForm extends React.Component {
           </div>
           <div className="field">
             <label>Address</label>
-            <PlacesAutocomplete
-              value={address}
-              onChange={setAddress}
-              onSelect={handleSelect}
-            ></PlacesAutocomplete>
+            
             {/* <input type="text" name="address" value={this.state.address} onChange={this.handleChange} placeholder="Address" /> */}
           </div>
           <div className="field">
