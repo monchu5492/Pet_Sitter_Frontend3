@@ -1,7 +1,7 @@
 import React from "react";
+import SearchComp from "./SearchComp";
 import { Button, Form } from "semantic-ui-react";
 import { Redirect } from "react-router-dom";
-
 
 const INITIAL_STATE = {
   name: "",
@@ -42,7 +42,7 @@ class SignupForm extends React.Component {
           </div>
           <div className="field">
             <label>Address</label>
-            
+            <SearchComp />
             {/* <input type="text" name="address" value={this.state.address} onChange={this.handleChange} placeholder="Address" /> */}
           </div>
           <div className="field">
