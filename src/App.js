@@ -5,6 +5,7 @@ import NavBar from "./NavBar";
 import LoginSignupContainer from "./LoginSignupContainer";
 import MyProfile from "./MyProfile";
 import SignupForm from "./SignupForm";
+import SearchComp from "./SearchComp";
 import PetsContainer from "./PetsContainer";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import NoteContainer from "./NoteContainer";
@@ -340,6 +341,9 @@ class App extends React.Component {
               />
             )}
           />
+          {this.state.user.name ? (
+            <Route path="/about" exact render={() => <SearchComp />} />
+          ) : null}
         </Router>
       </div>
     );
