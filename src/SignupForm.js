@@ -42,7 +42,7 @@ class SignupForm extends React.Component {
           </div>
           <div className="field">
             <label>Address</label>
-            <SearchComp />
+            <SearchComp setUserLatLng={this.props.setUserLatLng} />
             {/* <input type="text" name="address" value={this.state.address} onChange={this.handleChange} placeholder="Address" /> */}
           </div>
           <div className="field">

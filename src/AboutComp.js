@@ -1,25 +1,28 @@
 import React from "react";
 import SearchComp from "./SearchComp";
-
 import { Map, GoogleApiWrapper } from "google-maps-react";
 
-const mapStyles = {
-  width: "100%",
-  height: "30%"
-};
-
-export default class AboutComp extends React.Component {
+export class AboutComp extends React.Component {
   render() {
+    console.log(this.props.userLatLng);
     return (
-      <Map
-        google={this.props.google}
-        zoom={8}
-        style={mapStyles}
-        initialCenter={{ lat: 47.444, lng: -122.176 }}
-      />
+      <div>
+        <div className="search">
+          <SearchComp />
+        </div>
+        <div>
+          <Map
+            google={this.props.google}
+            zoom={13}
+            style={{ width: "100%", height: "30%" }}
+            initialCenter={{ lat: 47.6194679, lng: -122.3009064 }}
+            // lat: 47.6194679, lng: -122.3009064
+          />
+        </div>
+      </div>
     );
   }
 }
-// export default GoogleApiWrapper({
-//   apiKey: "AIzaSyATO-qfqEDrcOxjP9v8kmDWAaJkfJratdY"
-// })(AboutComp);
+export default GoogleApiWrapper({
+  apiKey: "AIzaSyATO-qfqEDrcOxjP9v8kmDWAaJkfJratdY",
+})(AboutComp);

@@ -1,4 +1,5 @@
 import React from "react";
+import Script from "react-load-script";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
@@ -15,9 +16,10 @@ class SearchComp extends React.Component {
   };
 
   handleSelect = address => {
+    this.setState({ address });
     geocodeByAddress(address)
       .then(results => getLatLng(results[0]))
-      .then(latLng => console.log("Success", latLng))
+      .then(latLng => console.log("Success", this.props.setUserLatLng(latLng)))
       .catch(error => console.error("Error", error));
   };
 

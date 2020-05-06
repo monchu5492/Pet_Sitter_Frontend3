@@ -23,20 +23,20 @@ class EditPetForm extends React.Component {
     name: this.props.pet.name,
     image: this.props.pet.image,
     anmial_type: this.props.pet.anmial_type,
-    age: this.props.pet.age
+    age: this.props.pet.age,
   };
 
   INITIAL_STATE() {
     return this.state;
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  handleEditButton = e => {
+  handleEditButton = (e) => {
     // debugger;
     e.preventDefault();
-    this.props.editPet(this.state);
+    this.props.editPetChange(this.state);
     this.setState(this.INITIAL_STATE());
     this.close();
   };

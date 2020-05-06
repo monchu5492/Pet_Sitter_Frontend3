@@ -6,28 +6,29 @@ const petsURL = "http://localhost:3000/pets";
 
 class PetsContainer extends React.Component {
   //iterate over all pets for this specific owner and create a PetCard for them
-  postPet = pet => {
+  postPet = (pet) => {
     console.log(pet);
     let { name, image, anmial_type, age } = pet;
     let newPet = {
       name: name,
       image: image,
       anmial_type: anmial_type,
-      age: age
+      age: age,
     };
     // let newPets = this.state.currentUserPets.push(pet)
+    console.log(newPet);
     fetch(petsURL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json"
+        Accept: "application/json",
       },
-      body: JSON.stringify({
-        pet: { ...newPet, owner_id: this.props.user.id }
-      })
+      body: JSON.stringify({ ...newPet, owner_id: this.props.user.id }),
     })
-      .then(res => res.json())
-      .then(pet => this.props.freshPetsFunction(pet));
+      .then((res) => res.json())
+      .then((pet) => this.props.freshPetsFunction(pet));
+
+    // this.props.freshPetsFunction
     //  this.setState({currentUserPets: this.state.currentUserPets[0]})
   };
 
@@ -43,13 +44,15 @@ class PetsContainer extends React.Component {
       console.log("no current pets");
       return <PetForm addPet={this.postPet} user={this.props.user} />;
     }
-    return this.props.currentUserPets.map(pet => {
+    return this.props.currentUserPets.map((pet) => {
+      console.log(pet);
       return (
         <PetCard
           pet={pet}
           user={this.props.user}
           editPet={this.props.editPet}
           deletePet={this.props.deletePet}
+          editPetChange={this.props.editPetChange}
           // notedPet={this.props.notedPet}
         />
       );

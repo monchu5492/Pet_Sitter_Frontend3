@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 
 // testing note #1 alice
 
-const ProfilePicture = props => (
+const ProfilePicture = (props) => (
   <Segment inverted>
     <div className="profile-top-section">
       <Image
@@ -39,6 +39,7 @@ const ProfilePicture = props => (
       freshPetsFunction={props.freshPetsFunction}
       editPet={props.editPet}
       deletePet={props.deletePet}
+      editPetChange={props.editPetChange}
       // notedPet={props.notedPet}
     />
   </Segment>

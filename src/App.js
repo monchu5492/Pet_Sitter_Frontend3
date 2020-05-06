@@ -5,7 +5,7 @@ import NavBar from "./NavBar";
 import LoginSignupContainer from "./LoginSignupContainer";
 import MyProfile from "./MyProfile";
 import SignupForm from "./SignupForm";
-import SearchComp from "./SearchComp";
+import AboutComp from "./AboutComp";
 import PetsContainer from "./PetsContainer";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import NoteContainer from "./NoteContainer";
@@ -22,8 +22,8 @@ class App extends React.Component {
       isLoggedIn: false,
       newSignup: false,
       notedPet: "",
-      user: [{}], //currently logged in user - data structure matches owners
-      // pets: [{}], //all pets that exist - MAY NOT BE NEEDED
+      user: [{}],
+      userLatLng: {},
       currentUserPets: [] //the pets that belong to the current user
 
       // user: [{
@@ -86,16 +86,15 @@ class App extends React.Component {
 
   filterFreshPets = pets => {
     console.log(pets);
-    if (pets.length >= 2) {
+    if (pets.length > 1) {
       let filteredPets = pets.filter(pet => {
         return pet.owner.id == this.state.user.id;
       });
       console.log("LOGGING FILTERED PETS:", filteredPets);
       this.setState({ currentUserPets: filteredPets });
-    } else {
-      let filteredPet = this.state.currentUserPets.filter(pet => {
-        return pet.id != pets.id;
-      });
+    } else if (pets.length <= 1) {
+      console.log(this.state.currentUserPets);
+      let filteredPet = [];
       let newCurrentPets = () => {
         filteredPet.push(pets);
         return filteredPet;
@@ -105,6 +104,21 @@ class App extends React.Component {
       });
       console.log("current pets set");
     }
+  };
+
+  editPetChange = pets => {
+    console.log(this.state.currentUserPets);
+    let filteredPet = this.state.currentUserPets.filter(pet => {
+      return pet.id != pets.id;
+    });
+    let newCurrentPets = () => {
+      filteredPet.push(pets);
+      return filteredPet;
+    };
+    this.setState({
+      currentUserPets: newCurrentPets()
+    });
+    console.log("current pets set");
   };
 
   // form for add pets: onsubmit -> post new pet to database
@@ -128,6 +142,7 @@ class App extends React.Component {
     let ownersfiltered = this.state.owners.filter(
       owner => owner.name == username
     );
+    console.log(ownersfiltered);
     console.log(this.state.owners);
     if (ownersfiltered.length === 1) {
       console.log("OWNER FOUND", ownersfiltered[0]);
@@ -142,6 +157,10 @@ class App extends React.Component {
       this.getFreshPets();
     } else {
     }
+  };
+
+  setUserLatLng = latLng => {
+    this.setState({ userLatLng: latLng });
   };
 
   //Sign Up Feature: Adding User to state of owners
@@ -211,7 +230,7 @@ class App extends React.Component {
       })
     })
       .then(res => res.json())
-      .then(pet => this.filterFreshPets(pet));
+      .then(pet => (console.log("tryin"), this.filterFreshPets(pet)));
   };
 
   handleNoteSubmit = note => {
@@ -226,14 +245,33 @@ class App extends React.Component {
       })
     })
       .then(res => res.json())
-      .then(data =>
-        this.setState({
-          ...this.state,
-          petNotes: data
-        })
-      );
+      .then(data => console.log("hello"));
+    // console.log(data.pet.notes);
+    //   let newPetNotes = () => {
+    //     if (this.state.petNotes) {
+    //       let petNotes = data.pet.notes;
+    //       petNotes.push(data);
+    //       return petNotes;
+    //     } else {
+    //       let petNotes = data.pet.notes;
+    //       petNotes.push(data);
+    //       return petNotes;
+    //     }
+    //   };
+    //   return (
+    //     this.setState({
+    //       ...this.state,
+    //       petNotes: newPetNotes()
+    //     }),
+    //     this.randFunc(data)
+    //   );
+    // });
   };
 
+  randFunc = data => {
+    console.log(data);
+    return data;
+  };
   // notedPet = pet => {
   //   this.setState({ ...this.state, notedPet: pet });
   // };
@@ -281,7 +319,11 @@ class App extends React.Component {
       <div>
         {/* {console.log(this.localUser().pets)} */}
         <Router>
-          <NavBar logout={this.logout} user={this.state.user} />
+          <NavBar
+            logout={this.logout}
+            user={this.state.user}
+            newSignUpState={this.state.newSignup}
+          />
 
           <Route path="/" exact render={() => <HomepageLayout />} />
 
@@ -303,6 +345,7 @@ class App extends React.Component {
               <SignupForm
                 onAddUser={this.addUser}
                 newSignUpState={this.state.newSignup}
+                setUserLatLng={this.setUserLatLng}
               />
             )}
           />
@@ -321,15 +364,11 @@ class App extends React.Component {
                   deletePet={this.deletePet}
                   newSignup={this.state.newSignup}
                   notedPet={this.notedPet}
+                  editPetChange={this.editPetChange}
                 />
               )}
             />
           ) : null}
-          {/* <Route 
-          path="/pet"
-          exact
-          render={() => <PetsContainer user={this.localUser()} pets={this.showPets()} postPet={this.postPet}/>}
-        /> */}
           <Route
             path="/notes"
             exact
@@ -342,7 +381,11 @@ class App extends React.Component {
             )}
           />
           {this.state.user.name ? (
-            <Route path="/about" exact render={() => <SearchComp />} />
+            <Route
+              path="/about"
+              exact
+              render={() => <AboutComp userLatLng={this.state.userLatLng} />}
+            />
           ) : null}
         </Router>
       </div>

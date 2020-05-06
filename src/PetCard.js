@@ -28,7 +28,9 @@ class PetCard extends React.Component {
     const { open, closeOnEscape, closeOnDimmerClick } = this.state;
     let pet = this.props.pet;
     return (
-      <Card style={{ marginRight: "28px" }}>
+      <Card
+        style={{ marginRight: "28px", maxHeight: "446px", marginTop: "15px" }}
+      >
         {console.log(pet.name)}
         <Image src={pet.image} wrapped ui={false} />
         <Segment className="cardseg" style={{ margin: "unset" }}>
@@ -52,13 +54,12 @@ class PetCard extends React.Component {
             {/* <EditPetForm editPet={this.props.editPet} /> */}
           </Card.Content>
         </Segment>
-        <>
-          <EditPetForm
-            editPet={this.props.editPet}
-            user={this.props.user}
-            pet={this.props.pet}
-          />
-        </>
+        <EditPetForm
+          editPet={this.props.editPet}
+          user={this.props.user}
+          pet={this.props.pet}
+          editPetChange={this.props.editPetChange}
+        />
         <div style={{ marginRight: "1px", marginLeft: "1px" }}>
           <Button
             className="ui button"
