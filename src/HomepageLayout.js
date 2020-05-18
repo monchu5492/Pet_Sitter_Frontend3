@@ -210,14 +210,14 @@ const HomepageLayout = () => (
               bananas can be bioengineered.
             </p>
           </Grid.Column>
-          <Grid.Column floated="right" width={6}>
+          {/* <Grid.Column floated="right" width={6}>
             <Image
               bordered
               rounded
               size="large"
               src="https://images.unsplash.com/photo-1522276498395-f4f68f7f8454?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2849&q=80"
             />
-          </Grid.Column>
+          </Grid.Column> */}
         </Grid.Row>
         <Grid.Row>
           <Grid.Column textAlign="center">
