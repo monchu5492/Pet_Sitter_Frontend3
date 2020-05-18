@@ -25,6 +25,24 @@ export default class MenuExampleSecondary extends Component {
           active={activeItem === "home"}
           onClick={this.handleItemClick}
         />
+<<<<<<< HEAD
+=======
+        {this.props.user.name ? (
+          <Menu.Item
+            as={NavLink}
+            to="/about"
+            name="about"
+            active={activeItem === "about"}
+            onClick={this.handleItemClick}
+          />
+        ) : (
+          <Menu.Item
+            name="about"
+            active={activeItem === "about"}
+            onClick={this.handleItemClick}
+          />
+        )}
+>>>>>>> 612d300ae3ac3ab754df48f127f0aafe0473d781
         {this.props.user.name ? (
           <Menu.Item
             as={NavLink}

@@ -5,7 +5,7 @@ import PlacesAutocomplete, {
   getLatLng
 } from "react-places-autocomplete";
 
-class SearchComp extends React.Component {
+export default class SearchComp extends React.Component {
   constructor(props) {
     super(props);
     this.state = { address: "" };
@@ -34,7 +34,7 @@ class SearchComp extends React.Component {
           <div>
             <input
               {...getInputProps({
-                placeholder: "Search your address...",
+                placeholder: "Search Places ...",
                 className: "location-search-input"
               })}
             />
@@ -46,13 +46,13 @@ class SearchComp extends React.Component {
                   : "suggestion-item";
                 // inline style for demonstration purpose
                 // const style = suggestion.active
-                //   ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                //   : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                //   ? { backgroundColor: "#fafafa", cursor: "pointer" }
+                //   : { backgroundColor: "#ffffff", cursor: "pointer" };
                 return (
                   <div
                     {...getSuggestionItemProps(suggestion, {
                       className
-                      // style,
+                      // style
                     })}
                   >
                     <span>{suggestion.description}</span>
@@ -66,4 +66,3 @@ class SearchComp extends React.Component {
     );
   }
 }
-export default SearchComp;

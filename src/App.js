@@ -21,9 +21,15 @@ class App extends React.Component {
       owners: [], //all owners, from db, and object containing all that user's pets
       isLoggedIn: false,
       newSignup: false,
+<<<<<<< HEAD
       notedPet: "",
       user: [{}],
       userLatLng: {},
+=======
+
+      user: [{}], //currently logged in user - data structure matches owners
+      // pets: [{}], //all pets that exist - MAY NOT BE NEEDED
+>>>>>>> 612d300ae3ac3ab754df48f127f0aafe0473d781
       currentUserPets: [] //the pets that belong to the current user
 
       // user: [{
@@ -190,7 +196,6 @@ class App extends React.Component {
       .then(data => console.log(data));
   };
 
-  // Delete Pet Feature: instantly deletes pets, trying to set alert message
   deletePet = pet => {
     const petsToKeep = this.state.currentUserPets.filter(i => i.id != pet.id);
     console.log("CONSOLE LOGGING DELETE FUNCTION:", petsToKeep);
@@ -233,6 +238,7 @@ class App extends React.Component {
       .then(pet => (console.log("tryin"), this.filterFreshPets(pet)));
   };
 
+<<<<<<< HEAD
   handleNoteSubmit = note => {
     fetch(notesURL, {
       method: "POST",
@@ -276,6 +282,8 @@ class App extends React.Component {
   //   this.setState({ ...this.state, notedPet: pet });
   // };
 
+=======
+>>>>>>> 612d300ae3ac3ab754df48f127f0aafe0473d781
   logout = () => {
     this.setState({
       currentUserPets: [],
@@ -363,12 +371,16 @@ class App extends React.Component {
                   editPet={this.editPet}
                   deletePet={this.deletePet}
                   newSignup={this.state.newSignup}
+<<<<<<< HEAD
                   notedPet={this.notedPet}
                   editPetChange={this.editPetChange}
+=======
+>>>>>>> 612d300ae3ac3ab754df48f127f0aafe0473d781
                 />
               )}
             />
           ) : null}
+<<<<<<< HEAD
           <Route
             path="/notes"
             exact
@@ -387,6 +399,14 @@ class App extends React.Component {
               render={() => <AboutComp userLatLng={this.state.userLatLng} />}
             />
           ) : null}
+=======
+          {/* <Route 
+          path="/pet"
+          exact
+          render={() => <PetsContainer user={this.localUser()} pets={this.showPets()} postPet={this.postPet}/>}
+        /> */}
+          <Route path="/notes" exact render={() => <NoteContainer />} />
+>>>>>>> 612d300ae3ac3ab754df48f127f0aafe0473d781
         </Router>
       </div>
     );

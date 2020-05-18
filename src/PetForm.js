@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Header, Image, Modal, Segment } from "semantic-ui-react";
+import { Button, Form, Header, Image, Modal } from "semantic-ui-react";
 const INITIAL_STATE = {
   name: "",
   image: "",
@@ -30,18 +30,8 @@ class PetForm extends React.Component {
     //testing modal:
     const { open, closeOnEscape, closeOnDimmerClick } = this.state;
     return (
-      <Segment
-        className="addpetseg"
-        compact
-        // inverted
-        style={{ padding: "unset", margin: "unset" }}
-      >
-        <Button
-          onClick={this.closeConfigShow(false, true)}
-          style={{ marginRight: "unset" }}
-        >
-          Add a Pet
-        </Button>
+      <div>
+        <Button onClick={this.closeConfigShow(false, true)}>Add a Pet</Button>
         <Modal
           open={open}
           closeOnEscape={closeOnEscape}
@@ -108,7 +98,7 @@ class PetForm extends React.Component {
             />
           </Modal.Actions>
         </Modal>
-      </Segment>
+      </div>
     );
   }
 }

@@ -1,9 +1,8 @@
 import React from "react";
-import { Card, Icon, Image, Button, Segment } from "semantic-ui-react";
+import { Card, Icon, Image, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import EditPetForm from "./EditPetForm";
 import addNoteModal from "./NoteContainer";
-import NoteForm from "./NoteForm";
 
 class PetCard extends React.Component {
   // handleDeleteButton = () => {
@@ -24,10 +23,9 @@ class PetCard extends React.Component {
   };
 
   render() {
-    console.log(this.props.pet);
     const { open, closeOnEscape, closeOnDimmerClick } = this.state;
-    let pet = this.props.pet;
     return (
+<<<<<<< HEAD
       <Card
         style={{ marginRight: "28px", maxHeight: "446px", marginTop: "15px" }}
       >
@@ -70,6 +68,35 @@ class PetCard extends React.Component {
             Delete Pet
           </Button>
         </div>
+=======
+      <Card>
+        {console.log(this.props.pet.name)}
+        <Image src={this.props.pet.image} wrapped ui={false} />
+        <Card.Content>
+          <div id="cContent">
+            <Card.Header>{this.props.pet.name}</Card.Header>
+            {/* <Card.Meta>
+            <span className="date">{this.props.pet.animal_type}</span>
+          </Card.Meta> */}
+            <Card.Description>{this.props.pet.age}</Card.Description>
+          </div>
+          <Button as={Link} to="/notes">
+            Add a Note
+          </Button>
+          {/* <Button floated="right">Add Note</Button> */}
+          {/* <EditPetForm editPet={this.props.editPet} /> */}
+        </Card.Content>
+        <>
+          <EditPetForm
+            editPet={this.props.editPet}
+            user={this.props.user}
+            pet={this.props.pet}
+          />
+        </>
+        <button className="ui button" onClick={this.handleDeleteButton}>
+          Delete Pet
+        </button>
+>>>>>>> 612d300ae3ac3ab754df48f127f0aafe0473d781
       </Card>
     );
   }
